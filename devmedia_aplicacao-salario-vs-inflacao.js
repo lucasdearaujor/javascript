@@ -28,20 +28,48 @@ let historicoInflacao = [
     {ano: 2020, ipca: 4.52}
 ];
 
-console.log("=== Aplicação Salário vs Inflação ===");
+console.log("\n=== Aplicação Salário vs Inflação ===");
 console.log("\n1 - Listar salários mínimos de 2010 a 2020");
 console.log("2 - Lista o índice IPCA de 2010 a 2020");
 console.log("3 - Comparação entre o percentual de aumento salarial e o IPCA")
 console.log("4 - Encerrar aplicação");
 
-let opcao = entrada.question("\nInforme o número da opção escolhida: ");
+let opcao = entrada.question("\nInforme o numero da sua escolha: ");
 
 switch(opcao){
-    case 1:
+    case "1":
+        for(let contador = 0; contador < historicoSalarial.length; contador++){
+            console.log("\n");
+            console.log("Ano:".padEnd(40,".")+historicoSalarial[contador].ano);
+            console.log("Salário mínimo:".padEnd(40,".")+ "R$ " + historicoSalarial[contador].salario.toFixed(2).replace(".",","));
+        }
         break;
-    case 2: 
+    case "2": 
+        for(let contador = 0; contador < historicoInflacao.length; contador++){
+            console.log("\n");
+            console.log("Ano:".padEnd(40,".")+historicoInflacao[contador].ano);
+            console.log("Inflação IPCA:".padEnd(40,".")+historicoInflacao[contador].ipca.toFixed(2).replace(".",",")+"%");
+        }
         break;
-    case 3:
+    case "3":
+        for(let i = 0; i < historicoSalarial.length; i++){
+            let percentualCrescimento = 0.0;
+            if(i > 0){
+                let salarioAnoAnterior = historicoSalarial[i - 1].salario;
+                let diferencaSalarioAnoAnterior = historicoSalarial[i].salario - salarioAnoAnterior;
+                percentualCrescimento = (diferencaSalarioAnoAnterior / salarioAnoAnterior) * 100 ;
+            }
+            console.log("\n");
+            console.log("Ano:".padEnd(40,".")+historicoSalarial[i].ano);
+            console.log("Salário mínimo:".padEnd(40,".")+ "R$ " + historicoSalarial[i].salario.toFixed(2).replace(".",","));
+            console.log("Crescimento salárial: ".padEnd(40,".")+percentualCrescimento.toFixed(2).replace(".",",")+"%");
+            for(let j = 0; j < historicoInflacao.length; j++){
+                if(historicoInflacao[j].ano === historicoSalarial[i].ano){
+                    console.log("Inflação IPCA:".padEnd(40,".")+historicoInflacao[j].ipca.toFixed(2).replace(".",",")+"%");
+                    break;
+                }
+            }
+        }
         break;
     default:
         break;
